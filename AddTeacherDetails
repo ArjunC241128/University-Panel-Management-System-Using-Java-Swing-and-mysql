@@ -1,0 +1,193 @@
+package University_Management;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.security.MessageDigest;
+import java.sql.*;
+
+public class AddTeacherDetails extends JFrame implements ActionListener {
+    JLabel l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12;
+    JButton bt1, bt2;
+    JTextField tf1, tf2, tf3, tf4, tf5, tf6, tf7, tf8, tf9;
+    JPasswordField pf1;
+    JFrame f;
+
+    AddTeacherDetails() {
+        f = new JFrame("Add new Teacher Details");
+        f.getContentPane().setBackground(Color.WHITE);
+        f.setLayout(null);
+
+        l1 = new JLabel();
+        l1.setBounds(0, 0, 840, 600);
+        l1.setLayout(null);
+
+        l2 = new JLabel("Add Teacher Details for signup");
+        l2.setBounds(230, 50, 500, 50);
+        l2.setFont(new Font("Arial", Font.BOLD, 20));
+        l2.setForeground(new Color(8, 121, 92));
+        l1.add(l2);
+
+        f.add(l1);
+
+        l3 = new JLabel("Name");
+        l3.setBounds(50, 150, 150, 30);
+        l3.setFont(new Font("Arial", Font.BOLD, 20));
+        l3.setForeground(Color.BLACK);
+        l1.add(l3);
+
+        tf1 = new JTextField();
+        tf1.setBounds(200, 150, 150, 30);
+        l1.add(tf1);
+
+        l4 = new JLabel("Username");
+        l4.setBounds(450, 150, 200, 30);
+        l4.setFont(new Font("Arial", Font.BOLD, 20));
+        l4.setForeground(Color.BLACK);
+        l1.add(l4);
+
+        tf2 = new JTextField();
+        tf2.setBounds(600, 150, 150, 30);
+        l1.add(tf2);
+
+        l5 = new JLabel("Password");
+        l5.setBounds(50, 200, 150, 30);
+        l5.setFont(new Font("Arial", Font.BOLD, 20));
+        l5.setForeground(Color.BLACK);
+        l1.add(l5);
+
+        pf1 = new JPasswordField();
+        pf1.setBounds(200, 200, 150, 30);
+        l1.add(pf1);
+
+        l6 = new JLabel("Email");
+        l6.setBounds(450, 200, 200, 30);
+        l6.setFont(new Font("Arial", Font.BOLD, 20));
+        l6.setForeground(Color.BLACK);
+        l1.add(l6);
+
+        tf3 = new JTextField();
+        tf3.setBounds(600, 200, 150, 30);
+        l1.add(tf3);
+
+        l7 = new JLabel("Phone");
+        l7.setBounds(450, 250, 100, 30);
+        l7.setFont(new Font("Arial", Font.BOLD, 20));
+        l7.setForeground(Color.BLACK);
+        l1.add(l7);
+
+        tf4 = new JTextField();
+        tf4.setBounds(600, 250, 150, 30);
+        l1.add(tf4);
+
+        l8 = new JLabel("Qualifications");
+        l8.setBounds(50, 300, 160, 30);
+        l8.setFont(new Font("Arial", Font.BOLD, 20));
+        l8.setForeground(Color.BLACK);
+        l1.add(l8);
+
+        tf5 = new JTextField();
+        tf5.setBounds(200, 300, 150, 30);
+        l1.add(tf5);
+
+        l9 = new JLabel("Gender");
+        l9.setBounds(450, 300, 100, 30);
+        l9.setFont(new Font("Arial", Font.BOLD, 20));
+        l9.setForeground(Color.BLACK);
+        l1.add(l9);
+
+        tf6 = new JTextField();
+        tf6.setBounds(600, 300, 150, 30);
+        l1.add(tf6);
+
+        l10 = new JLabel("Blood Group");
+        l10.setBounds(450, 350, 140, 30);
+        l10.setFont(new Font("Arial", Font.BOLD, 20));
+        l10.setForeground(Color.BLACK);
+        l1.add(l10);
+
+        tf7 = new JTextField();
+        tf7.setBounds(600, 350, 150, 30);
+        l1.add(tf7);
+
+        l11 = new JLabel("Teaching Exp.");
+        l11.setBounds(50, 400, 250, 30);
+        l11.setFont(new Font("Arial", Font.BOLD, 20));
+        l11.setForeground(Color.BLACK);
+        l1.add(l11);
+
+        tf8 = new JTextField();
+        tf8.setBounds(200, 400, 150, 30);
+        l1.add(tf8);
+
+        l12 = new JLabel("Date of Birth");
+        l12.setBounds(450, 450, 150, 30);
+        l12.setFont(new Font("Arial", Font.BOLD, 20));
+        l12.setForeground(Color.BLACK);
+        l1.add(l12);
+
+        tf9 = new JTextField();
+        tf9.setBounds(600, 450, 150, 30);
+        l1.add(tf9);
+
+        bt1 = new JButton("Submit");
+        bt2 = new JButton("Cancel");
+        bt1.setBackground(Color.BLACK);
+        bt1.setForeground(Color.WHITE);
+        bt2.setBackground(new Color(8, 161, 92));
+        bt2.setForeground(Color.BLACK);
+        bt1.setBounds(250, 500, 150, 30);
+        bt2.setBounds(450, 500, 150, 30);
+
+        l1.add(bt1);
+        l1.add(bt2);
+
+        bt1.addActionListener(this);
+        bt2.addActionListener(this);
+
+        f.setSize(840, 600);
+        f.setLocation(300, 100);
+        f.setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent ae) {
+        if (ae.getSource() == bt1) {
+            String name = tf1.getText();
+            String username = tf2.getText();
+            String password = String.valueOf(pf1.getPassword());
+            String email = tf3.getText();
+            String phone = tf4.getText();
+            String qualifications = tf5.getText();
+            String gender = tf6.getText();
+            String blood = tf7.getText();
+            String teachingexp = tf8.getText();
+            String dob = tf9.getText();
+
+            try {
+                String hashedPassword = hashPassword(password);
+                ConnectionClass obj = new ConnectionClass();
+                String q = "INSERT INTO teacher VALUES('" + name + "', '" + username + "', '" + hashedPassword + "', '" + email + "', '" + phone + "', '" + qualifications + "', '" + gender + "', '" + blood + "', '" + teachingexp + "', '" + dob + "')";
+                obj.stm.executeUpdate(q);
+                JOptionPane.showMessageDialog(null, "Details have been successfully submitted");
+                f.setVisible(false);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        if (ae.getSource() == bt2) {
+            f.setVisible(false);
+        }
+    }
+    public String hashPassword(String password) throws Exception {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] hash = md.digest(password.getBytes("UTF-8"));
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            hexString.append(String.format("%02x", b));
+        }
+        return hexString.toString();
+    }
+    public static void main(String[] args) {
+        new AddTeacherDetails();
+    }
+}
