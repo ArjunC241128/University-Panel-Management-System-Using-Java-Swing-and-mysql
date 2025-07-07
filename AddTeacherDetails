@@ -2,11 +2,9 @@ package University_Management;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.security.MessageDigest;
-import java.sql.*;
 
 public class AddTeacherDetails extends JFrame implements ActionListener {
-    JLabel l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12;
+    JLabel l1, l2, l3, l4, l5, l6, l7, l8, l9, l9b, l10, l11, l12;
     JButton bt1, bt2;
     JTextField tf1, tf2, tf3, tf4, tf5, tf6, tf7, tf8, tf9;
     JPasswordField pf1;
@@ -153,40 +151,31 @@ public class AddTeacherDetails extends JFrame implements ActionListener {
         if (ae.getSource() == bt1) {
             String name = tf1.getText();
             String username = tf2.getText();
-            String password = String.valueOf(pf1.getPassword());
+            String password = pf1.getText();
             String email = tf3.getText();
             String phone = tf4.getText();
             String qualifications = tf5.getText();
             String gender = tf6.getText();
-            String blood = tf7.getText();
+            String blood= tf7.getText();
             String teachingexp = tf8.getText();
             String dob = tf9.getText();
-
             try {
-                String hashedPassword = hashPassword(password);
                 ConnectionClass obj = new ConnectionClass();
-                String q = "INSERT INTO teacher VALUES('" + name + "', '" + username + "', '" + hashedPassword + "', '" + email + "', '" + phone + "', '" + qualifications + "', '" + gender + "', '" + blood + "', '" + teachingexp + "', '" + dob + "')";
+                String q = "insert into teacher values('"+name+"', '"+username+"', '"+password+"', '"+email+"', '"+phone+"', '"+qualifications+"', '"+gender+"', '"+blood+"', '"+teachingexp+"', '"+dob+"')";
                 obj.stm.executeUpdate(q);
-                JOptionPane.showMessageDialog(null, "Details have been successfully submitted");
+                JOptionPane.showMessageDialog(null, "Details sucessfully have been submitted");
+
                 f.setVisible(false);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
-
-        if (ae.getSource() == bt2) {
+        if(ae.getSource() == bt2) {
             f.setVisible(false);
         }
     }
-    public String hashPassword(String password) throws Exception {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        byte[] hash = md.digest(password.getBytes("UTF-8"));
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : hash) {
-            hexString.append(String.format("%02x", b));
-        }
-        return hexString.toString();
-    }
+
     public static void main(String[] args) {
         new AddTeacherDetails();
     }
