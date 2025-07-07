@@ -18,6 +18,7 @@ public class UpdateTeacherDetails extends JFrame implements ActionListener {
         setSize(760, 720);
         setResizable(false);
         setLocationRelativeTo(null);
+
         f = new Font("Arial", Font.BOLD, 25);
         f1 = new Font("Arial", Font.PLAIN, 18);
 
@@ -33,7 +34,6 @@ public class UpdateTeacherDetails extends JFrame implements ActionListener {
             ex.printStackTrace();
         }
 
-        // Labels
         l1 = new JLabel("Update Teacher Details", JLabel.CENTER);
         l1.setForeground(new Color(176, 4, 21));
         l1.setFont(f);
@@ -47,88 +47,80 @@ public class UpdateTeacherDetails extends JFrame implements ActionListener {
         l8 = new JLabel("Teaching Experience");
         l9 = new JLabel("Qualifications");
         l10 = new JLabel("Date of Birth");
-       
-        tf1 = new JTextField();  
-        tf2 = new JTextField();  
-        tf3 = new JTextField();  
-        tf4 = new JTextField();  
-        tf5 = new JTextField();  
+
+        tf1 = new JTextField();
+        tf2 = new JTextField();
+        tf3 = new JTextField();
+        tf4 = new JTextField();
+        tf5 = new JTextField();
         tf6 = new JTextField();
         tf7 = new JTextField();
         tf8 = new JTextField();
+
         bt1 = new JButton("Update");
         bt2 = new JButton("Back");
+
         bt1.addActionListener(this);
         bt2.addActionListener(this);
+
         bt1.setBackground(new Color(176, 4, 21));
         bt1.setForeground(Color.WHITE);
         bt2.setBackground(Color.BLACK);
         bt2.setForeground(Color.WHITE);
-        l1.setFont(f);
-        l2.setFont(f1);
-        l3.setFont(f1);
-        l4.setFont(f1);
-        l5.setFont(f1);
-        l6.setFont(f1);
-        l7.setFont(f1);
-        l8.setFont(f1);
-        l9.setFont(f1);
-        l10.setFont(f1);
-        tf1.setFont(f1);
-        tf2.setFont(f1);
-        tf3.setFont(f1);
-        tf4.setFont(f1);
-        tf5.setFont(f1);
-        tf6.setFont(f1);
-        tf7.setFont(f1);
-        tf8.setFont(f1);
+
+        // Set fonts
+        JLabel[] labels = {l2, l3, l4, l5, l6, l7, l8, l9, l10};
+        for (JLabel label : labels) {
+            label.setFont(f1);
+        }
+
+        JTextField[] fields = {tf1, tf2, tf3, tf4, tf5, tf6, tf7, tf8};
+        for (JTextField tf : fields) {
+            tf.setFont(f1);
+        }
+
         bt1.setFont(f1);
         bt2.setFont(f1);
         ch1.setFont(f1);
-        l2.setForeground(new Color(20,2,117));
-        l3.setForeground(new Color(20,2,117));
-        p1 = new JPanel();
-        p1.setLayout((new GridLayout(1,1,10,10)));
+
+        l2.setForeground(new Color(20, 2, 117));
+        l3.setForeground(new Color(20, 2, 117));
+
+        // Top Panel
+        p1 = new JPanel(new GridLayout(1, 1, 10, 10));
         p1.add(l1);
+
+        // Center Panel
         p2 = new JPanel();
-        p2.setLayout((new GridLayout(14,1,10,10)));
-        p2.add(l2);
-        p2.add(ch1);
-        p2.add(l3);
-        p2.add(tf1);
-        p2.add(l4);
-        p2.add(tf2);
-        p2.add(l5);
-        p2.add(tf3);
-        p2.add(l6);
-        p2.add(tf4);
-        p2.add(l7);
-        p2.add(tf5);
-        p2.add(l8);
-        p2.add(tf6);
-        p2.add(l9);
-        p2.add(tf7);
-        p2.add(l10);
-        p2.add(tf8);
-        p2.add(bt1);
-        p2.add(bt2);
+        p2.setLayout(new GridLayout(20, 1, 10, 10)); // enough rows
+        p2.add(l2);  p2.add(ch1);
+        p2.add(l3);  p2.add(tf1);
+        p2.add(l4);  p2.add(tf2);
+        p2.add(l5);  p2.add(tf3);
+        p2.add(l6);  p2.add(tf4);
+        p2.add(l7);  p2.add(tf5);
+        p2.add(l8);  p2.add(tf6);
+        p2.add(l9);  p2.add(tf7);
+        p2.add(l10); p2.add(tf8);
+        p2.add(bt1); p2.add(bt2);
+
+        // Left Panel (Image)
         p3 = new JPanel(new GridLayout(1, 1, 10, 10));
         try {
             ImageIcon img = new ImageIcon(getClass().getResource("/University_Management/images/teacher update.jpg"));
             Image i1 = img.getImage().getScaledInstance(230, 520, Image.SCALE_SMOOTH);
-            ImageIcon img1 = new ImageIcon(i1);
-            l11img = new JLabel(img1);
-            p3.add(l11img);
+            l11img = new JLabel(new ImageIcon(i1));
         } catch (Exception e) {
             l11img = new JLabel("Image Not Found");
-            p3.add(l11img);
         }
+        p3.add(l11img);
 
         setLayout(new BorderLayout(10, 10));
-        add(p1, "North");
-        add(p2, "Center");
-        add(p3, "West");
+        add(p1, BorderLayout.NORTH);
+        add(p2, BorderLayout.CENTER);
+        add(p3, BorderLayout.WEST);
 
+        // Corrected: Use addItemListener instead of MouseAdapter
         ch1.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 try {
@@ -136,7 +128,7 @@ public class UpdateTeacherDetails extends JFrame implements ActionListener {
                     String username = ch1.getSelectedItem();
                     String q = "select * from teacher where username = '" + username + "'";
                     ResultSet rest = obj.stm.executeQuery(q);
-                    while (rest.next()) {
+                    if (rest.next()) {
                         tf1.setText(rest.getString("password"));
                         tf2.setText(rest.getString("email"));
                         tf3.setText(rest.getString("phone"));
@@ -152,22 +144,19 @@ public class UpdateTeacherDetails extends JFrame implements ActionListener {
             }
         });
     }
+
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == bt1) {
             String username = ch1.getSelectedItem();
-            String password = tf1.getText().trim();
-            String email = tf2.getText().trim();
-            String phone = tf3.getText().trim();
-            String gender = tf4.getText().trim();
-            String blood = tf5.getText().trim();
-            String teachingexp = tf6.getText().trim();
-            String qualifications = tf7.getText().trim();
-            String dob = tf8.getText().trim();
-            if (password.isEmpty() || email.isEmpty() || phone.isEmpty() || gender.isEmpty() ||
-                    blood.isEmpty() || teachingexp.isEmpty() || qualifications.isEmpty() || dob.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Please fill in all fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+            String password = tf1.getText();
+            String email = tf2.getText();
+            String phone = tf3.getText();
+            String gender = tf4.getText();
+            String blood = tf5.getText();
+            String teachingexp = tf6.getText();
+            String qualifications = tf7.getText();
+            String dob = tf8.getText();
+
             try {
                 ConnectionClass obj = new ConnectionClass();
                 String q = "UPDATE teacher SET " +
@@ -183,17 +172,17 @@ public class UpdateTeacherDetails extends JFrame implements ActionListener {
 
                 int result = obj.stm.executeUpdate(q);
 
-                if (result >= 1) {
+                if (result == 1) {
                     JOptionPane.showMessageDialog(null, "Teacher details have been successfully updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    this.setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "Update failed. No matching record found or no changes made.", "Failure", JOptionPane.ERROR_MESSAGE);
+                    this.setVisible(false);
                 }
 
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "An error occurred while updating. Please check the inputs or database connection.", "Error", JOptionPane.ERROR_MESSAGE);
                 ex.printStackTrace();
             }
-
         } else if (e.getSource() == bt2) {
             this.setVisible(false);
         }
