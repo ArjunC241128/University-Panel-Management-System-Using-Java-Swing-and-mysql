@@ -4,175 +4,206 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class AddTeacherDetails extends JFrame implements ActionListener {
-    JLabel l1, l2, l3, l4, l5, l6, l7, l8, l9, l9b, l10, l11, l12;
-    JButton bt1, bt2;
-    JTextField tf1, tf2, tf3, tf4, tf5, tf6, tf7, tf8, tf9;
-    JPasswordField pf1;
-    JFrame f;
+    JLabel label1, label2, label3, label4, label5, label6, label7, label8, label9, label10, label11, label12;
+    JButton button1, button2;
+    JTextField textfield1, textfield2, textfield3, textfield4, textfield5, textfield7, textfield8, textfield9;
+    JPasswordField passwordfield;
+    JRadioButton maleButton, femaleButton;
+    ButtonGroup genderGroup;
+    JFrame frame;
 
     AddTeacherDetails() {
-        f = new JFrame("Add new Teacher Details");
-        f.getContentPane().setBackground(Color.WHITE);
-        f.setLayout(null);
+        frame = new JFrame("Add new Teacher Details");
+        frame.getContentPane().setBackground(Color.WHITE);
+        frame.setLayout(null);
 
-        l1 = new JLabel();
-        l1.setBounds(0, 0, 840, 600);
-        l1.setLayout(null);
+        label1 = new JLabel();
+        label1.setBounds(0, 0, 840, 600);
+        label1.setLayout(null);
 
-        l2 = new JLabel("Add Teacher Details for signup");
-        l2.setBounds(230, 50, 500, 50);
-        l2.setFont(new Font("Arial", Font.BOLD, 20));
-        l2.setForeground(new Color(8, 121, 92));
-        l1.add(l2);
+        label2 = new JLabel("Add Teacher Details for signup");
+        label2.setBounds(230, 50, 500, 50);
+        label2.setFont(new Font("Arial", Font.BOLD, 20));
+        label2.setForeground(new Color(8, 121, 92));
+        label1.add(label2);
 
-        f.add(l1);
+        frame.add(label1);
 
-        l3 = new JLabel("Name");
-        l3.setBounds(50, 150, 150, 30);
-        l3.setFont(new Font("Arial", Font.BOLD, 20));
-        l3.setForeground(Color.BLACK);
-        l1.add(l3);
+        label3 = new JLabel("Name");
+        label3.setBounds(50, 150, 150, 30);
+        label3.setFont(new Font("Arial", Font.BOLD, 20));
+        label3.setForeground(Color.BLACK);
+        label1.add(label3);
 
-        tf1 = new JTextField();
-        tf1.setBounds(200, 150, 150, 30);
-        l1.add(tf1);
+        textfield1 = new JTextField();
+        textfield1.setBounds(200, 150, 150, 30);
+        label1.add(textfield1);
 
-        l4 = new JLabel("Username");
-        l4.setBounds(450, 150, 200, 30);
-        l4.setFont(new Font("Arial", Font.BOLD, 20));
-        l4.setForeground(Color.BLACK);
-        l1.add(l4);
+        label4 = new JLabel("Username");
+        label4.setBounds(450, 150, 200, 30);
+        label4.setFont(new Font("Arial", Font.BOLD, 20));
+        label4.setForeground(Color.BLACK);
+        label1.add(label4);
 
-        tf2 = new JTextField();
-        tf2.setBounds(600, 150, 150, 30);
-        l1.add(tf2);
+        textfield2 = new JTextField();
+        textfield2.setBounds(600, 150, 150, 30);
+        label1.add(textfield2);
 
-        l5 = new JLabel("Password");
-        l5.setBounds(50, 200, 150, 30);
-        l5.setFont(new Font("Arial", Font.BOLD, 20));
-        l5.setForeground(Color.BLACK);
-        l1.add(l5);
+        label5 = new JLabel("Password");
+        label5.setBounds(50, 200, 150, 30);
+        label5.setFont(new Font("Arial", Font.BOLD, 20));
+        label5.setForeground(Color.BLACK);
+        label1.add(label5);
 
-        pf1 = new JPasswordField();
-        pf1.setBounds(200, 200, 150, 30);
-        l1.add(pf1);
+        passwordfield = new JPasswordField();
+        passwordfield.setBounds(200, 200, 150, 30);
+        label1.add(passwordfield);
 
-        l6 = new JLabel("Email");
-        l6.setBounds(450, 200, 200, 30);
-        l6.setFont(new Font("Arial", Font.BOLD, 20));
-        l6.setForeground(Color.BLACK);
-        l1.add(l6);
+        label6 = new JLabel("Email");
+        label6.setBounds(450, 200, 200, 30);
+        label6.setFont(new Font("Arial", Font.BOLD, 20));
+        label6.setForeground(Color.BLACK);
+        label1.add(label6);
 
-        tf3 = new JTextField();
-        tf3.setBounds(600, 200, 150, 30);
-        l1.add(tf3);
+        textfield3 = new JTextField();
+        textfield3.setBounds(600, 200, 150, 30);
+        label1.add(textfield3);
 
-        l7 = new JLabel("Phone");
-        l7.setBounds(450, 250, 100, 30);
-        l7.setFont(new Font("Arial", Font.BOLD, 20));
-        l7.setForeground(Color.BLACK);
-        l1.add(l7);
+        label7 = new JLabel("Phone");
+        label7.setBounds(450, 250, 100, 30);
+        label7.setFont(new Font("Arial", Font.BOLD, 20));
+        label7.setForeground(Color.BLACK);
+        label1.add(label7);
 
-        tf4 = new JTextField();
-        tf4.setBounds(600, 250, 150, 30);
-        l1.add(tf4);
+        textfield4 = new JTextField();
+        textfield4.setBounds(600, 250, 150, 30);
+        label1.add(textfield4);
 
-        l8 = new JLabel("Qualifications");
-        l8.setBounds(50, 300, 160, 30);
-        l8.setFont(new Font("Arial", Font.BOLD, 20));
-        l8.setForeground(Color.BLACK);
-        l1.add(l8);
+        label8 = new JLabel("Qualifications");
+        label8.setBounds(50, 300, 160, 30);
+        label8.setFont(new Font("Arial", Font.BOLD, 20));
+        label8.setForeground(Color.BLACK);
+        label1.add(label8);
 
-        tf5 = new JTextField();
-        tf5.setBounds(200, 300, 150, 30);
-        l1.add(tf5);
+        textfield5 = new JTextField();
+        textfield5.setBounds(200, 300, 150, 30);
+        label1.add(textfield5);
 
-        l9 = new JLabel("Gender");
-        l9.setBounds(450, 300, 100, 30);
-        l9.setFont(new Font("Arial", Font.BOLD, 20));
-        l9.setForeground(Color.BLACK);
-        l1.add(l9);
+        label9 = new JLabel("Gender");
+        label9.setBounds(450, 300, 100, 30);
+        label9.setFont(new Font("Arial", Font.BOLD, 20));
+        label9.setForeground(Color.BLACK);
+        label1.add(label9);
 
-        tf6 = new JTextField();
-        tf6.setBounds(600, 300, 150, 30);
-        l1.add(tf6);
+        maleButton = new JRadioButton("Male");
+        femaleButton = new JRadioButton("Female");
 
-        l10 = new JLabel("Blood Group");
-        l10.setBounds(450, 350, 140, 30);
-        l10.setFont(new Font("Arial", Font.BOLD, 20));
-        l10.setForeground(Color.BLACK);
-        l1.add(l10);
+        maleButton.setBounds(600, 300, 70, 30);
+        femaleButton.setBounds(670, 300, 80, 30);
+        maleButton.setBackground(Color.WHITE);
+        femaleButton.setBackground(Color.WHITE);
 
-        tf7 = new JTextField();
-        tf7.setBounds(600, 350, 150, 30);
-        l1.add(tf7);
+        genderGroup = new ButtonGroup();
+        genderGroup.add(maleButton);
+        genderGroup.add(femaleButton);
 
-        l11 = new JLabel("Teaching Exp.");
-        l11.setBounds(50, 400, 250, 30);
-        l11.setFont(new Font("Arial", Font.BOLD, 20));
-        l11.setForeground(Color.BLACK);
-        l1.add(l11);
+        label1.add(maleButton);
+        label1.add(femaleButton);
+        
+        RadioButtonHandler handler = new RadioButtonHandler();
+        maleButton.addActionListener(handler);
+        femaleButton.addActionListener(handler);
 
-        tf8 = new JTextField();
-        tf8.setBounds(200, 400, 150, 30);
-        l1.add(tf8);
+        label10 = new JLabel("Blood Group");
+        label10.setBounds(450, 350, 140, 30);
+        label10.setFont(new Font("Arial", Font.BOLD, 20));
+        label10.setForeground(Color.BLACK);
+        label1.add(label10);
 
-        l12 = new JLabel("Date of Birth");
-        l12.setBounds(450, 450, 150, 30);
-        l12.setFont(new Font("Arial", Font.BOLD, 20));
-        l12.setForeground(Color.BLACK);
-        l1.add(l12);
+        textfield7 = new JTextField();
+        textfield7.setBounds(600, 350, 150, 30);
+        label1.add(textfield7);
 
-        tf9 = new JTextField();
-        tf9.setBounds(600, 450, 150, 30);
-        l1.add(tf9);
+        label11 = new JLabel("Teaching Exp.");
+        label11.setBounds(50, 400, 250, 30);
+        label11.setFont(new Font("Arial", Font.BOLD, 20));
+        label11.setForeground(Color.BLACK);
+        label1.add(label11);
 
-        bt1 = new JButton("Submit");
-        bt2 = new JButton("Cancel");
-        bt1.setBackground(Color.BLACK);
-        bt1.setForeground(Color.WHITE);
-        bt2.setBackground(new Color(8, 161, 92));
-        bt2.setForeground(Color.BLACK);
-        bt1.setBounds(250, 500, 150, 30);
-        bt2.setBounds(450, 500, 150, 30);
+        textfield8 = new JTextField();
+        textfield8.setBounds(200, 400, 150, 30);
+        label1.add(textfield8);
 
-        l1.add(bt1);
-        l1.add(bt2);
+        label12 = new JLabel("Date of Birth");
+        label12.setBounds(450, 450, 150, 30);
+        label12.setFont(new Font("Arial", Font.BOLD, 20));
+        label12.setForeground(Color.BLACK);
+        label1.add(label12);
 
-        bt1.addActionListener(this);
-        bt2.addActionListener(this);
+        textfield9 = new JTextField();
+        textfield9.setBounds(600, 450, 150, 30);
+        label1.add(textfield9);
 
-        f.setSize(840, 600);
-        f.setLocation(300, 100);
-        f.setVisible(true);
+        button1 = new JButton("Submit");
+        button2 = new JButton("Cancel");
+        button1.setBackground(Color.BLACK);
+        button1.setForeground(Color.WHITE);
+        button2.setBackground(new Color(8, 161, 92));
+        button2.setForeground(Color.BLACK);
+        button1.setBounds(250, 500, 150, 30);
+        button2.setBounds(450, 500, 150, 30);
+
+        label1.add(button1);
+        label1.add(button2);
+
+        button1.addActionListener(this);
+        button2.addActionListener(this);
+
+        frame.setSize(840, 600);
+        frame.setLocation(300, 100);
+        frame.setVisible(true);
+    }
+
+    private class RadioButtonHandler implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JRadioButton selected = (JRadioButton) e.getSource();
+            System.out.println("Gender selected: " + selected.getText());
+        }
     }
 
     public void actionPerformed(ActionEvent ae) {
-        if (ae.getSource() == bt1) {
-            String name = tf1.getText();
-            String username = tf2.getText();
-            String password = pf1.getText();
-            String email = tf3.getText();
-            String phone = tf4.getText();
-            String qualifications = tf5.getText();
-            String gender = tf6.getText();
-            String blood= tf7.getText();
-            String teachingexp = tf8.getText();
-            String dob = tf9.getText();
+        if (ae.getSource() == button1) {
+            String name = textfield1.getText();
+            String username = textfield2.getText();
+            String password = passwordfield.getText();
+            String email = textfield3.getText();
+            String phone = textfield4.getText();
+            String qualifications = textfield5.getText();
+            String gender = "";
+
+            if (maleButton.isSelected()) {
+                gender = "Male";
+            } else if (femaleButton.isSelected()) {
+                gender = "Female";
+            }
+
+            String blood = textfield7.getText();
+            String teachingexp = textfield8.getText();
+            String dob = textfield9.getText();
+
             try {
                 ConnectionClass obj = new ConnectionClass();
-                String q = "insert into teacher values('"+name+"', '"+username+"', '"+password+"', '"+email+"', '"+phone+"', '"+qualifications+"', '"+gender+"', '"+blood+"', '"+teachingexp+"', '"+dob+"')";
+                String q = "insert into teacher values('" + name + "', '" + username + "', '" + password + "', '" + email + "', '" + phone + "', '" + qualifications + "', '" + gender + "', '" + blood + "', '" + teachingexp + "', '" + dob + "')";
                 obj.stm.executeUpdate(q);
-                JOptionPane.showMessageDialog(null, "Details sucessfully have been submitted");
-
-                f.setVisible(false);
-            }
-            catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Details successfully have been submitted");
+                frame.setVisible(false);
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
-        if(ae.getSource() == bt2) {
-            f.setVisible(false);
+
+        if (ae.getSource() == button2) {
+            frame.setVisible(false);
         }
     }
 
