@@ -1,0 +1,209 @@
+package University_Management;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.sql.*;
+
+public class AddStudentDetails extends JFrame implements ActionListener {
+    JLabel label1, label2, label3, label4, label5, label6, label7, label8, label9, label10;
+    JTextField textfield1, textfield2, textfield3, textfield4, textfield5;
+    JPasswordField passwordfield;
+    Choice choice1, choice2;
+    JButton button1, button2;
+
+    AddStudentDetails() {
+        setTitle("Add New Student Details");
+        setLayout(null);
+        getContentPane().setBackground(Color.WHITE);
+
+        label1 = new JLabel();
+        label1.setBounds(0, 0, 840, 600);
+        label1.setLayout(null);
+
+        label2 = new JLabel("Add Student Details for Signup");
+        label2.setBounds(230, 30, 500, 50);
+        label2.setFont(new Font("Arial", Font.BOLD, 30));
+        label2.setForeground(new Color(59, 2, 224));
+        label1.add(label2);
+
+        label3 = new JLabel("Name");
+        label3.setBounds(100, 120, 150, 30);
+        label3.setFont(new Font("Arial", Font.BOLD, 20));
+        label3.setForeground(new Color(59, 2, 117));
+        label1.add(label3);
+
+        textfield1 = new JTextField();
+        textfield1.setBounds(300, 120, 200, 30);
+        label1.add(textfield1);
+
+        label4 = new JLabel("Username");
+        label4.setBounds(100, 170, 150, 30);
+        label4.setFont(new Font("Arial", Font.BOLD, 20));
+        label4.setForeground(new Color(59, 2, 117));
+        label1.add(label4);
+
+        textfield2 = new JTextField();
+        textfield2.setBounds(300, 170, 200, 30);
+        label1.add(textfield2);
+
+        label5 = new JLabel("Password");
+        label5.setBounds(100, 220, 150, 30);
+        label5.setFont(new Font("Arial", Font.BOLD, 20));
+        label5.setForeground(new Color(59, 2, 117));
+        label1.add(label5);
+
+        passwordfield = new JPasswordField();
+        passwordfield.setBounds(300, 220, 200, 30);
+        label1.add(passwordfield);
+
+        label6 = new JLabel("Email");
+        label6.setBounds(100, 270, 150, 30);
+        label6.setFont(new Font("Arial", Font.BOLD, 20));
+        label6.setForeground(new Color(59, 2, 117));
+        label1.add(label6);
+
+        textfield3 = new JTextField();
+        textfield3.setBounds(300, 270, 200, 30);
+        label1.add(textfield3);
+
+        label7 = new JLabel("Phone");
+        label7.setBounds(100, 320, 150, 30);
+        label7.setFont(new Font("Arial", Font.BOLD, 20));
+        label7.setForeground(new Color(59, 2, 117));
+        label1.add(label7);
+
+        textfield4 = new JTextField();
+        textfield4.setBounds(300, 320, 200, 30);
+        label1.add(textfield4);
+
+        label8 = new JLabel("Semester");
+        label8.setBounds(100, 370, 130, 30);
+        label8.setFont(new Font("Arial", Font.BOLD, 20));
+        label8.setForeground(new Color(59, 2, 117));
+        label1.add(label8);
+
+        choice1 = new Choice();
+        choice1.setBounds(300, 370, 200, 30);
+        label1.add(choice1);
+
+        label9 = new JLabel("Section");
+        label9.setBounds(100, 420, 150, 30);
+        label9.setFont(new Font("Arial", Font.BOLD, 20));
+        label9.setForeground(new Color(59, 2, 117));
+        label1.add(label9);
+
+        choice2 = new Choice();
+        choice2.setBounds(300, 420, 200, 30);
+        label1.add(choice2);
+
+        label10 = new JLabel("Roll No");
+        label10.setBounds(100, 470, 150, 30);
+        label10.setFont(new Font("Arial", Font.BOLD, 20));
+        label10.setForeground(new Color(59, 2, 117));
+        label1.add(label10);
+
+        textfield5 = new JTextField();
+        textfield5.setBounds(300, 470, 200, 30);
+        label1.add(textfield5);
+
+        button1 = new JButton("Add Student");
+        button1.setBounds(250, 520, 150, 40);
+        button1.setBackground(Color.BLACK);
+        button1.setForeground(Color.WHITE);
+        button1.addActionListener(this);
+        label1.add(button1);
+
+        button2 = new JButton("Back");
+        button2.setBounds(450, 520, 150, 40);
+        button2.setBackground(new Color(88, 245, 174));
+        button2.setForeground(Color.BLACK);
+        button2.addActionListener(this);
+        label1.add(button2);
+
+        try {
+            ConnectionClass object = new ConnectionClass();
+            String query = "SELECT DISTINCT semester_name FROM semester";
+            ResultSet rest = object.stm.executeQuery(query);
+            while (rest.next()) {
+                choice1.add(rest.getString("semester_name"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        choice1.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                choice2.removeAll();
+                try {
+                    ConnectionClass object = new ConnectionClass();
+                    String semester_name = choice1.getSelectedItem();
+                    String q1 = "SELECT DISTINCT section FROM semester WHERE semester_name = '" + semester_name + "'";
+                    ResultSet rs = object.stm.executeQuery(q1);
+                    while (rs.next()) {
+                        choice2.add(rs.getString("section"));
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        choice2.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    ConnectionClass object = new ConnectionClass();
+                    String semester_name = choice1.getSelectedItem();
+                    String section = choice2.getSelectedItem();
+                    String q2 = "SELECT enrolled_student FROM semester WHERE semester_name = '" + semester_name + "' AND section = '" + section + "'";
+                    ResultSet rs = object.stm.executeQuery(q2);
+                    if (rs.next()) {
+                        int roll_no = Integer.parseInt(rs.getString("enrolled_student")) + 1;
+                        textfield5.setText(String.valueOf(roll_no));
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        add(label1);
+        setSize(840, 600);
+        setLocation(300, 100);
+        setResizable(false);
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == button1) {
+            String name = textfield1.getText();
+            String username = textfield2.getText();
+            String password = new String(passwordfield.getPassword());
+            String email = textfield3.getText();
+            String phone = textfield4.getText();
+            String semester_name = choice1.getSelectedItem();
+            String section = choice2.getSelectedItem();
+            String roll_no = textfield5.getText();
+
+            try {
+                ConnectionClass object1 = new ConnectionClass();
+                String query = "INSERT INTO student (name, username, password, email, phone, semester_name, section, roll_no) " +
+                        "VALUES('" + name + "', '" + username + "', '" + password + "', '" + email + "', '" + phone + "', '" + semester_name + "', '" + section + "', '" + roll_no + "')";
+                String query1 = "UPDATE semester SET enrolled_student = '" + roll_no + "' WHERE semester_name = '" + semester_name + "' AND section = '" + section + "'";
+                object1.stm.executeUpdate(query);
+                object1.stm.executeUpdate(query1);
+                JOptionPane.showMessageDialog(null, "Student Details Added Successfully");
+                this.setVisible(false);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        if (e.getSource() == button2) {
+            this.setVisible(false);
+        }
+    }
+
+    public static void main(String[] args) {
+        new AddStudentDetails();
+    }
+}
