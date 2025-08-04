@@ -1,0 +1,217 @@
+package University_Management;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.sql.*;
+
+public class AddMarksDetails extends JFrame implements ActionListener {
+    JLabel label1, label2, label3, label4, label5, label6, label7, label8;
+    Choice choice1, choice2, choice3, choice4, choice5;
+    JButton button1, button2;
+    JTextField textfield1, textfield2, textfield3; 
+    JPanel panel1, panel2;
+    Font font1;
+
+    AddMarksDetails() {
+        super("Add Marks Details");
+        setSize(700, 500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        setLocationRelativeTo(null);
+
+        font1 = new Font("Arial", Font.BOLD, 25);
+
+        choice1 = new Choice(); 
+        choice2 = new Choice(); 
+        choice3 = new Choice(); 
+        choice4 = new Choice(); 
+        choice5 = new Choice(); 
+
+        textfield1 = new JTextField(); 
+        textfield2 = new JTextField(); 
+        textfield3 = new JTextField(); 
+
+        button1 = new JButton("Submit Marks");
+        button2 = new JButton("Back");
+
+        label1 = new JLabel("Add Marks Details", JLabel.CENTER);
+        label1.setFont(font1);
+        label1.setForeground(Color.RED);
+
+        label2 = new JLabel("Semester No");
+        label3 = new JLabel("Section");
+        label4 = new JLabel("Student Username");
+        label5 = new JLabel("Student ID");
+        label6 = new JLabel("Student Name");
+        label7 = new JLabel("Subject");
+        label8 = new JLabel("Obtained Marks");
+
+      
+        try {
+            ConnectionClass obj = new ConnectionClass();
+            ResultSet rs = obj.stm.executeQuery("SELECT DISTINCT semester_name FROM student");
+            while (rs.next()) {
+                choice1.add(rs.getString("semester_name"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+      
+        try {
+            ConnectionClass obj = new ConnectionClass();
+            ResultSet rs = obj.stm.executeQuery("SELECT * FROM subject");
+            while (rs.next()) {
+                choice5.add(rs.getString("sub_name"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+      
+        choice4.add("Mid Term");
+        choice4.add("Final Term");
+
+      
+        panel1 = new JPanel();
+        panel1.setLayout(new GridLayout(1, 1));
+        panel1.add(label1);
+
+       
+        panel2 = new JPanel();
+        panel2.setLayout(new GridLayout(9, 2, 10, 10));
+        panel2.add(label2);
+        panel2.add(choice1);
+        panel2.add(label3);
+        panel2.add(choice2);
+        panel2.add(label4);
+        panel2.add(choice3);
+        panel2.add(label5);
+        panel2.add(textfield3); 
+        panel2.add(label6);
+        panel2.add(textfield1); 
+        panel2.add(label7);
+        panel2.add(choice5); 
+        panel2.add(label8);
+        panel2.add(textfield2); 
+        panel2.add(new JLabel("Term"));
+        panel2.add(choice4);
+        panel2.add(button1);
+        panel2.add(button2);
+
+        setLayout(new BorderLayout(10, 10));
+        add(panel1, BorderLayout.NORTH);
+        add(panel2, BorderLayout.CENTER);
+
+        button1.setBackground(Color.RED);
+        button1.setForeground(Color.WHITE);
+        button2.setBackground(Color.BLACK);
+        button2.setForeground(Color.WHITE);
+
+      
+        choice1.addItemListener(e -> {
+            choice2.removeAll();
+            try {
+                ConnectionClass obj = new ConnectionClass();
+                String semester = choice1.getSelectedItem();
+                ResultSet rs = obj.stm.executeQuery("SELECT DISTINCT section FROM student WHERE semester_name='" + semester + "'");
+                while (rs.next()) {
+                    choice2.add(rs.getString("section"));
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+      
+        choice2.addItemListener(e -> {
+            choice3.removeAll();
+            try {
+                ConnectionClass obj = new ConnectionClass();
+                String semester = choice1.getSelectedItem();
+                String section = choice2.getSelectedItem();
+                ResultSet rs = obj.stm.executeQuery("SELECT username FROM student WHERE semester_name='" + semester + "' AND section='" + section + "'");
+                while (rs.next()) {
+                    choice3.add(rs.getString("username"));
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        choice3.addItemListener(e -> {
+            try {
+                ConnectionClass obj = new ConnectionClass();
+                String semester = choice1.getSelectedItem();
+                String section = choice2.getSelectedItem();
+                String username = choice3.getSelectedItem();
+                String query = "SELECT name, student_id FROM student WHERE semester_name='" + semester + "' AND section='" + section + "' AND username='" + username + "'";
+                ResultSet rs = obj.stm.executeQuery(query);
+                if (rs.next()) {
+                    textfield1.setText(rs.getString("name"));
+                    textfield3.setText(rs.getString("student_id"));
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        button1.addActionListener(this);
+        button2.addActionListener(this);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == button1) {
+            String semester = choice1.getSelectedItem();
+            String section = choice2.getSelectedItem();
+            String username = choice3.getSelectedItem();
+            String studentId = textfield3.getText();
+            String name = textfield1.getText();
+            String subject = choice5.getSelectedItem();
+            String marks = textfield2.getText();
+            String term = choice4.getSelectedItem();
+
+            if (marks.isEmpty() || studentId.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Fields cannot be empty");
+                return;
+            }
+
+            try {
+                int m = Integer.parseInt(marks);
+                if (m > 100) {
+                    JOptionPane.showMessageDialog(null, "Marks cannot be greater than 100");
+                    return;
+                }
+
+                ConnectionClass obj = new ConnectionClass();
+                String query = "INSERT INTO marks (student_id, username, semester_name, section, name, subject, term, mark) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement pstmt = obj.con.prepareStatement(query);
+                pstmt.setString(1, studentId);
+                pstmt.setString(2, username);
+                pstmt.setString(3, semester);
+                pstmt.setString(4, section);
+                pstmt.setString(5, name);
+                pstmt.setString(6, subject);
+                pstmt.setString(7, term);
+                pstmt.setInt(8, m);
+                pstmt.executeUpdate();
+
+                JOptionPane.showMessageDialog(null, "Marks have been inserted");
+                this.setVisible(false);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Marks must be a valid number");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+            }
+        }
+
+        if (e.getSource() == button2) {
+            this.setVisible(false);
+        }
+    }
+
+    public static void main(String[] args) {
+        new AddMarksDetails().setVisible(true);
+    }
+}
