@@ -1,0 +1,264 @@
+package University_Management;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.sql.*;
+import java.util.Date;
+
+public class AddFeeDetails extends JFrame implements ActionListener {
+    JLabel label, label1, label2, label3, label4, label5, label6, label7, label8, label9, label10;
+    JFrame frame;
+    JTextField textfield1, textfield2, textfield3, textfield4, textfield5;
+    JButton button, button1;
+    Choice choice1, choice2, choice3, choice4;
+    AddFeeDetails() {
+        frame = new JFrame("Add Student Fee Details");
+        frame.setBackground(Color.WHITE);
+        frame.setLayout(null);
+        label = new JLabel();
+        label.setBounds(0, 0, 840, 600);
+        label.setLayout(null);
+        frame.add(label);
+        label1 = new JLabel("Add Student Fee Details");
+        label1.setBounds(230, 30, 500, 50);
+        label1.setFont(new Font("Arial", Font.BOLD, 30));
+        label1.setForeground(new Color(84, 2, 224));
+        label.add(label1);
+        label2 = new JLabel("Semester Name");
+        label2.setBounds(50, 100, 200, 30);
+        label2.setFont(new Font("Arial", Font.BOLD, 20));
+        label2.setForeground(new Color(55, 25, 217));
+        label.add(label2);
+
+        choice1 = new Choice();
+        try {
+            ConnectionClass object = new ConnectionClass();
+            String query = "SELECT DISTINCT semester_name FROM student";
+            ResultSet rest = object.stm.executeQuery(query);
+            while (rest.next()) {
+                choice1.add(rest.getString("semester_name"));
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        choice1.setBounds(250, 100, 150, 30);
+        choice1.setFont(new Font("Arial", Font.BOLD, 20));
+        label.add(choice1);
+        label3 = new JLabel("Section");
+        label3.setBounds(450, 100, 100, 30);
+        label3.setFont(new Font("Arial", Font.BOLD, 20));
+        label3.setForeground(new Color(55, 25, 117));
+        label.add(label3);
+        choice2 = new Choice();
+        choice2.setBounds(600, 100, 150, 30);
+        choice2.setFont(new Font("Arial", Font.BOLD, 20));
+        label.add(choice2);
+        label4 = new JLabel("Username");
+        label4.setBounds(50, 150, 150, 30);
+        label4.setFont(new Font("Arial", Font.BOLD, 20));
+        label4.setForeground(new Color(59, 25, 117));
+        label.add(label4);
+        choice3 = new Choice();
+        choice3.setBounds(250, 150, 150, 30);
+        choice3.setFont(new Font("Arial", Font.BOLD, 20));
+        label.add(choice3);
+        label5 = new JLabel("Student Name");
+        label5.setBounds(450, 150, 150, 30);
+        label5.setFont(new Font("Arial", Font.BOLD, 20));
+        label5.setForeground(new Color(59, 25, 117));
+        label.add(label5);
+        textfield1 = new JTextField();
+        textfield1.setBounds(600, 150, 150, 30);
+        textfield1.setEditable(false);
+        label.add(textfield1);
+        label6 = new JLabel("Email");
+        label6.setBounds(50, 200, 150, 30);
+        label6.setFont(new Font("Arial", Font.BOLD, 20));
+        label6.setForeground(new Color(59, 25, 117));
+        label.add(label6);
+        textfield2 = new JTextField();
+        textfield2.setBounds(250, 200, 150, 30);
+        textfield2.setEditable(false);
+        textfield2.setFont(new Font("Arial", Font.BOLD, 20));
+        label.add(textfield2);
+        label7 = new JLabel("Total Fee");
+        label7.setBounds(450, 200, 150, 30);
+        label7.setFont(new Font("Arial", Font.BOLD, 20));
+        label7.setForeground(new Color(59, 25, 117));
+        label.add(label7);
+        textfield3 = new JTextField();
+        textfield3.setBounds(600, 200, 150, 30);
+        textfield3.setEditable(false);
+        textfield3.setFont(new Font("Arial", Font.BOLD, 20));
+        label.add(textfield3);
+        label8 = new JLabel("Submit Fee");
+        label8.setBounds(50, 250, 150, 30);
+        label8.setFont(new Font("Arial", Font.BOLD, 20));
+        label8.setForeground(new Color(59, 25, 117));
+        label.add(label8);
+
+        textfield4 = new JTextField();
+        textfield4.setBounds(250, 250, 150, 30);
+        label.add(textfield4);
+
+        label9 = new JLabel("Submit Fee");
+        label9.setBounds(50, 250, 150, 30);
+        label9.setFont(new Font("Arial", Font.BOLD, 20));
+        label9.setForeground(new Color(59, 25, 117));
+        label.add(label9);
+
+        textfield5 = new JTextField();
+        textfield5.setBounds(250, 250, 150, 30);
+        label.add(textfield5);
+        label10 = new JLabel("Fee Status");
+        label10.setBounds(450, 250, 150, 30);
+        label10.setFont(new Font("Arial", Font.BOLD, 20));
+        label10.setForeground(new Color(59, 25, 117));
+        label.add(label10);
+
+        choice4 = new Choice();
+        choice4.add("Due");
+        choice4.add("Complete");
+        choice4.setBounds(600, 250, 150, 30);
+        label.add(choice4);
+
+        button = new JButton("Submit");
+        button.setBackground(Color.BLACK);
+        button.setForeground(Color.WHITE);
+        button.setBounds(250, 320, 150, 40);
+        label.add(button);
+
+        button1 = new JButton("Back");
+        button1.setBackground(new Color(88, 245, 174));
+        button1.setForeground(Color.BLACK);
+        button1.setBounds(450, 320, 150, 40);
+        label.add(button1);
+
+        button.addActionListener(this);
+        button1.addActionListener(this);
+
+        choice1.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                choice2.removeAll();
+                try {
+                    ConnectionClass object = new ConnectionClass();
+                    String semester = choice1.getSelectedItem();
+                    String query = "SELECT DISTINCT section FROM student WHERE semester_name = '" + semester + "'";
+                    ResultSet rs = object.stm.executeQuery(query);
+                    while (rs.next()) {
+                        choice2.add(rs.getString("section"));
+                    }
+
+                    query = "SELECT * FROM fee_structure WHERE semester_no = '" + semester + "'";
+                    rs = object.stm.executeQuery(query);
+                    if (rs.next()) {
+                        textfield3.setText(rs.getString("fee_details"));
+                    } else {
+                        textfield3.setText("");
+                        JOptionPane.showMessageDialog(null, "Fee not defined for this semester.");
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        choice2.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                choice3.removeAll();
+                try {
+                    ConnectionClass object = new ConnectionClass();
+                    String semester_name = choice1.getSelectedItem();
+                    String section = choice2.getSelectedItem();
+                    String query = "SELECT username FROM student WHERE semester_name = '" + semester_name + "' AND section = '" + section + "'";
+                    ResultSet rs = object.stm.executeQuery(query);
+                    while (rs.next()) {
+                        choice3.add(rs.getString("username"));
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        choice3.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent event) {
+                try {
+                    ConnectionClass object = new ConnectionClass();
+                    String semester_name = choice1.getSelectedItem();
+                    String section = choice2.getSelectedItem();
+                    String username = choice3.getSelectedItem();
+                    String query1 = "SELECT * FROM student WHERE semester_name = '" + semester_name + "' and section = '" + section + "' and username = '" + username + "'";
+                    ResultSet rs = object.stm.executeQuery(query1);
+                    if (rs.next()) {
+                        textfield1.setText(rs.getString("name"));
+                        textfield2.setText(rs.getString("email"));
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        frame.setVisible(true);
+        frame.setSize(840, 600);
+        frame.setLocation(300, 100);
+    }
+
+    public void actionPerformed(ActionEvent event) {
+        if (event.getSource() == button) {
+            String submitFeeText = textfield4.getText().trim();
+            String totalText = textfield3.getText().trim();
+
+            if (submitFeeText.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Fee amount cannot be empty.");
+                return;
+            }
+
+            try {
+                int submitFee = Integer.parseInt(submitFeeText);
+                int totalFee = Integer.parseInt(totalText);
+
+                if (submitFee > totalFee) {
+                    JOptionPane.showMessageDialog(null, "Submitted fee exceeds total: " + totalFee);
+                    return;
+                }
+
+                if (submitFee == totalFee && choice4.getSelectedItem().equals("Due")) {
+                    JOptionPane.showMessageDialog(null, "If fee is fully paid, set status to 'Complete'");
+                    return;
+                }
+
+                String semester_name = choice1.getSelectedItem();
+                String section = choice2.getSelectedItem();
+                String username = choice3.getSelectedItem();
+                String name = textfield1.getText();
+                String email = textfield2.getText();
+                String status = choice4.getSelectedItem();
+                String fee_id = textfield3.getText();
+                Date date = new Date();
+
+                ConnectionClass object = new ConnectionClass();
+                String query = "INSERT INTO student_fee VALUES('" + fee_id + "', '" + semester_name + "', '" + section + "', '" + username + "', '" + name + "', '" + email + "', '" + totalFee + "', '" + submitFee + "', '" + status + "', '" + date + "')";
+                object.stm.executeUpdate(query);
+
+                JOptionPane.showMessageDialog(null, "Fee details submitted successfully.");
+                frame.setVisible(false);
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Fee must be a valid number.");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Database error occurred.");
+            }
+        }
+
+        if (event.getSource() == button1) {
+            frame.setVisible(false);
+        }
+    }
+
+    public static void main(String[] args) {
+        new AddFeeDetails();
+    }
+}
