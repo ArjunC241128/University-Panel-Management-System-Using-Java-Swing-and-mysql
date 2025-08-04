@@ -1,0 +1,117 @@
+package University_Management;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.sql.*;
+
+public class AddNewCourse extends JFrame implements ActionListener {
+    JLabel label1, label2, label3, label4, label5;
+    JFrame frame;
+    JTextField textfield;
+    JButton button1, button2;
+    Choice choice1, choice2;
+
+    public AddNewCourse() {
+        frame = new JFrame("Add New Course Details");
+        frame.setBackground(Color.WHITE);
+        frame.setLayout(null);
+
+        label1 = new JLabel();
+        label1.setBounds(0, 0, 800, 560);
+        label1.setLayout(null);
+
+        label2 = new JLabel("Add New Course Details");
+        label2.setBounds(250, 20, 500, 50);
+        label2.setFont(new Font("Arial", Font.BOLD, 22));
+        label2.setForeground(new Color(84, 2, 224));
+        label1.add(label2);
+
+        label3 = new JLabel("Course Code");
+        label3.setBounds(100, 100, 150, 30);
+        label3.setFont(new Font("Arial", Font.BOLD, 18));
+        label3.setForeground(new Color(59, 25, 117));
+        label1.add(label3);
+
+        choice1 = new Choice();
+        choice1.add("CSE - 2321");
+        choice1.add("MATH - 2307");
+        choice1.add("CSE - 2323");
+        choice1.add("STAT - 2302");
+        choice1.add("CSE - 2340");
+        choice1.setBounds(300, 100, 200, 30);
+        choice1.setFont(new Font("Arial", Font.PLAIN, 16));
+        label1.add(choice1);
+
+        label4 = new JLabel("Course Name");
+        label4.setBounds(100, 150, 150, 30);
+        label4.setFont(new Font("Arial", Font.BOLD, 18));
+        label4.setForeground(new Color(59, 25, 117));
+        label1.add(label4);
+
+        choice2 = new Choice();
+        choice2.add("Data Structures");
+        choice2.add("Mathematics");
+        choice2.add("Digital Logic Design");
+        choice2.add("Probability and Statistics");
+        choice2.add("Software Development");
+        choice2.setBounds(300, 150, 200, 30);
+        choice2.setFont(new Font("Arial", Font.PLAIN, 16));
+        label1.add(choice2);
+
+        label5 = new JLabel("Semester ID");
+        label5.setBounds(100, 200, 150, 30);
+        label5.setFont(new Font("Arial", Font.BOLD, 18));
+        label5.setForeground(new Color(59, 25, 117));
+        label1.add(label5);
+
+        textfield = new JTextField();
+        textfield.setFont(new Font("Arial", Font.PLAIN, 16));
+        textfield.setBounds(300, 200, 200, 30);
+        label1.add(textfield);
+
+        button1 = new JButton("Add Course Details");
+        button1.setBounds(150, 270, 170, 40);
+        button1.setBackground(Color.BLACK);
+        button1.setForeground(Color.WHITE);
+        button1.addActionListener(this);
+        label1.add(button1);
+
+        button2 = new JButton("Back");
+        button2.setBounds(350, 270, 170, 40);
+        button2.setBackground(new Color(88, 245, 174));
+        button2.setForeground(Color.BLACK);
+        button2.addActionListener(this);
+        label1.add(button2);
+
+        frame.add(label1);
+        frame.setSize(800, 560);
+        frame.setLocation(300, 100);
+        frame.setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == button1) {
+            String sub_code = choice1.getSelectedItem();
+            String sub_name = choice2.getSelectedItem();
+            String semester_id = textfield.getText();
+
+            try {
+                ConnectionClass object = new ConnectionClass(); 
+                String query = "INSERT INTO subject VALUES ('" + sub_code + "', '" + sub_name + "', '" + semester_id + "')";
+                object.stm.executeUpdate(query);
+                JOptionPane.showMessageDialog(frame, "Course Details Added Successfully");
+                frame.setVisible(false);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        if (e.getSource() == button2) {
+            frame.setVisible(false);
+        }
+    }
+
+    public static void main(String[] args) {
+        new AddNewCourse();
+    }
+}
