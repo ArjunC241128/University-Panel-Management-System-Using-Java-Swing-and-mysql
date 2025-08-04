@@ -1,0 +1,117 @@
+package University_Management;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.sql.*;
+
+public class AddNewSemester extends JFrame implements ActionListener {
+    JLabel label1, label2, label3, label4, label5;
+    JTextField textfield1;
+    Choice choice1, choice2;
+    JButton button1, button2;
+
+    AddNewSemester() {
+        setTitle("Add New Semester Details");
+        setLayout(null);
+        getContentPane().setBackground(Color.WHITE);
+
+        label1 = new JLabel();
+        label1.setBounds(0, 0, 840, 600);
+        label1.setLayout(null);
+
+        label2 = new JLabel("Add New Semester Details");
+        label2.setBounds(250, 30, 500, 50);
+        label2.setFont(new Font("Arial", Font.BOLD, 30));
+        label2.setForeground(new Color(59, 2, 224));
+        label1.add(label2);
+
+        label3 = new JLabel("Semester Name");
+        label3.setBounds(200, 120, 200, 30);
+        label3.setFont(new Font("Arial", Font.BOLD, 20));
+        label3.setForeground(new Color(59, 2, 117));
+        label1.add(label3);
+
+        choice1 = new Choice();
+        for (int i = 1; i <= 8; i++) {
+            choice1.add(String.valueOf(i));
+        }
+        choice1.setBounds(400, 120, 200, 30);
+        label1.add(choice1);
+
+        label4 = new JLabel("Section");
+        label4.setBounds(200, 170, 200, 30);
+        label4.setFont(new Font("Arial", Font.BOLD, 20));
+        label4.setForeground(new Color(59, 2, 117));
+        label1.add(label4);
+
+        choice2 = new Choice();
+        choice2.add("A");
+        choice2.add("B");
+        choice2.add("C");
+        choice2.setBounds(400, 170, 200, 30);
+        label1.add(choice2);
+
+        label5 = new JLabel("Enrolled Students");
+        label5.setBounds(200, 220, 200, 30);
+        label5.setFont(new Font("Arial", Font.BOLD, 20));
+        label5.setForeground(new Color(59, 2, 117));
+        label1.add(label5);
+
+        textfield1 = new JTextField();
+        textfield1.setBounds(400, 220, 200, 30);
+        textfield1.setFont(new Font("Arial", Font.PLAIN, 18));
+        label1.add(textfield1);
+
+        button1 = new JButton("Add Semester");
+        button1.setBounds(250, 350, 150, 40);
+        button1.setBackground(Color.BLACK);
+        button1.setForeground(Color.WHITE);
+        button1.addActionListener(this);
+        label1.add(button1);
+
+        button2 = new JButton("Back");
+        button2.setBounds(450, 350, 150, 40);
+        button2.setBackground(new Color(88, 245, 174));
+        button2.setForeground(Color.BLACK);
+        button2.addActionListener(this);
+        label1.add(button2);
+
+        add(label1);
+        setSize(840, 600);
+        setLocation(300, 100);
+        setResizable(false);
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == button1) {
+            String semester_name = choice1.getSelectedItem();
+            String section = choice2.getSelectedItem();
+            String enrolled_student = textfield1.getText();
+
+            try {
+                ConnectionClass object1 = new ConnectionClass();
+                String query = "INSERT INTO semester (semester_name, section, enrolled_student) VALUES (?, ?, ?)";
+                PreparedStatement pstmt = object1.con.prepareStatement(query);
+                pstmt.setString(1, semester_name);
+                pstmt.setString(2, section);
+                pstmt.setString(3, enrolled_student);
+                pstmt.executeUpdate();
+
+                JOptionPane.showMessageDialog(null, "Semester Details Added Successfully");
+                this.setVisible(false);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error: " + e1.getMessage());
+            }
+        }
+
+        if (e.getSource() == button2) {
+            this.setVisible(false);
+        }
+    }
+
+    public static void main(String[] args) {
+        new AddNewSemester();
+    }
+}
