@@ -6,111 +6,148 @@ import java.sql.*;
 
 public class LoginPage extends JFrame implements ActionListener {
 
-    JLabel l1, l2, l3, l4, l5;
-    JTextField tf1;
-    JPasswordField pf1;
-    Choice ch1;
-    JButton bt1, bt2;
+    JLabel label1, label2, label3, label4, label5;
+    JTextField textField;
+    JPasswordField passwordField;
+    Choice choice;
+    JButton button1, button2, registerbutton;
 
     public LoginPage() {
         setTitle("University Login Account");
         setLayout(null);
-        l1 = new JLabel();
-        l1.setBounds(0, 0, 750, 450);
-        l1.setLayout(null);
+
+        label1 = new JLabel();
+        label1.setBounds(0, 0, 750, 450);
+        label1.setLayout(null);
+
         try {
             ImageIcon img = new ImageIcon(ClassLoader.getSystemResource("University_Management/images/login.jpg"));
             Image i1 = img.getImage().getScaledInstance(750, 450, Image.SCALE_SMOOTH);
             ImageIcon img1 = new ImageIcon(i1);
-            l1.setIcon(img1);
+            label1.setIcon(img1);
         } catch (Exception e) {
             System.out.println("Background image not found.");
         }
-        l2 = new JLabel("University Login Account");
-        l2.setBounds(300, 132, 500, 50);
-        l2.setFont(new Font("Arial", Font.BOLD, 30));
-        l2.setForeground(new Color(53, 4, 117));
-        l1.add(l2);
-        l3 = new JLabel("Account       :");
-        l3.setBounds(280, 200, 150, 30);
-        l3.setFont(new Font("Arial", Font.BOLD, 30));
-        l3.setForeground(new Color(245, 135, 66));
-        l1.add(l3);
-        ch1 = new Choice();
-        ch1.add("Admin");
-        ch1.add("Student");
-        ch1.add("Teacher");
-        ch1.setFont(new Font("Arial", Font.PLAIN, 20));
-        ch1.setBounds(480, 200, 150, 30);
-        l1.add(ch1);
-        l4 = new JLabel("Username    :");
-        l4.setBounds(280, 245, 150, 30);
-        l4.setFont(new Font("Arial", Font.BOLD, 20));
-        l4.setForeground(new Color(245, 135, 66));
-        l1.add(l4);
 
-        tf1 = new JTextField();
-        tf1.setFont(new Font("Arial", Font.BOLD, 20));
-        tf1.setBounds(480, 245, 150, 30);
-        l1.add(tf1);
-        l5 = new JLabel("Password    :");
-        l5.setBounds(280, 295, 150, 30);
-        l5.setFont(new Font("Arial", Font.BOLD, 20));
-        l5.setForeground(new Color(245, 135, 66));
-        l1.add(l5);
+        label2 = new JLabel("University Login Account");
+        label2.setBounds(230, 60, 500, 50);
+        label2.setFont(new Font("Arial", Font.BOLD, 30));
+        label2.setForeground(new Color(53, 4, 117));
+        label1.add(label2);
 
-        pf1 = new JPasswordField();
-        pf1.setFont(new Font("Arial", Font.BOLD, 20));
-        pf1.setBounds(480, 295, 150, 30);
-        l1.add(pf1);
-        bt1 = new JButton("Login");
-        bt2 = new JButton("Back");
-        bt1.setFont(new Font("Arial", Font.BOLD, 20));
-        bt2.setFont(new Font("Arial", Font.BOLD, 20));
-        bt1.setBounds(280, 350, 150, 40);
-        bt2.setBounds(480, 350, 150, 40);
-        bt1.addActionListener(this);
-        bt2.addActionListener(this);
-        l1.add(bt1);
-        l1.add(bt2);
+        label3 = new JLabel("Account       :");
+        label3.setBounds(180, 140, 150, 30);
+        label3.setFont(new Font("Arial", Font.BOLD, 20));
+        label3.setForeground(new Color(245, 135, 66));
+        label1.add(label3);
 
-        add(l1);
+        choice = new Choice();
+        choice.add("Admin");
+        choice.add("Student");
+        choice.add("Teacher");
+        choice.setFont(new Font("Arial", Font.PLAIN, 16));
+        choice.setBounds(330, 140, 200, 30);
+        label1.add(choice);
+
+        label4 = new JLabel("Username    :");
+        label4.setBounds(180, 190, 150, 30);
+        label4.setFont(new Font("Arial", Font.BOLD, 20));
+        label4.setForeground(new Color(245, 135, 66));
+        label1.add(label4);
+
+        textField = new JTextField();
+        textField.setFont(new Font("Arial", Font.BOLD, 18));
+        textField.setBounds(330, 190, 200, 30);
+        label1.add(textField);
+
+        label5 = new JLabel("Password    :");
+        label5.setBounds(180, 240, 150, 30);
+        label5.setFont(new Font("Arial", Font.BOLD, 20));
+        label5.setForeground(new Color(245, 135, 66));
+        label1.add(label5);
+
+        passwordField = new JPasswordField();
+        passwordField.setFont(new Font("Arial", Font.BOLD, 18));
+        passwordField.setBounds(330, 240, 200, 30);
+        label1.add(passwordField);
+
+        button1 = new JButton("Login");
+        button2 = new JButton("Back");
+        registerbutton = new JButton("Register");
+
+        button1.setFont(new Font("Arial", Font.BOLD, 18));
+        button2.setFont(new Font("Arial", Font.BOLD, 18));
+        registerbutton.setFont(new Font("Arial", Font.BOLD, 18));
+
+        button1.setBounds(180, 310, 100, 40);
+        button2.setBounds(300, 310, 100, 40);
+        registerbutton.setBounds(420, 310, 110, 40);
+
+        button1.addActionListener(this);
+        button2.addActionListener(this);
+        registerbutton.addActionListener(e -> {
+            new RegistrationForm().setVisible(true);
+            dispose(); // Close login window
+        });
+
+        label1.add(button1);
+        label1.add(button2);
+        label1.add(registerbutton);
+
+        add(label1);
         setSize(750, 460);
         setLocation(300, 100);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
-    public void actionPerformed(ActionEvent ae) {
-        if (ae.getSource() == bt1) {
+    public void actionPerformed(ActionEvent actionevent) {
+        if (actionevent.getSource() == button1) {
+            String username = textField.getText().trim();
+            String password = new String(passwordField.getPassword()).trim();
+            String account = choice.getSelectedItem();
+
+            if (username.equals("") || password.equals("")) {
+                JOptionPane.showMessageDialog(this, "Please enter username and password");
+                return;
+            }
+
             try {
-                ConnectionClass obj = new ConnectionClass(); 
-                String username = tf1.getText();
-                String password = new String(pf1.getPassword());
-                String account = ch1.getSelectedItem();
+                ConnectionClass obj = new ConnectionClass();
 
-                String q = "SELECT * FROM ums WHERE username='" + username + "' AND password='" + password + "'";
-                ResultSet rest = obj.stm.executeQuery(q);
+                if (obj.con == null) {
+                    JOptionPane.showMessageDialog(this, "Database connection failed.");
+                    return;
+                }
 
-                if (rest.next()) {
-                    JOptionPane.showMessageDialog(null, account + " login successful!");
+                String q = "SELECT * FROM user_register WHERE username = ? AND password = ?";
+                try (PreparedStatement stmt = obj.con.prepareStatement(q)) {
+                    stmt.setString(1, username);
+                    stmt.setString(2, password);
+                    ResultSet rest = stmt.executeQuery();
 
-                    if (account.equals("Admin")) {
-                        new AdminHomePage("Admin").setVisible(true); 
-                    }  
-                    //else if (account.equals("Teacher")) {
-                        //new TeacherHomePage().setVisible(true); // Ensure this class exists
-                   // }
+                    if (rest.next()) {
+                        JOptionPane.showMessageDialog(this, account + " login successful!");
 
-                    this.setVisible(false);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Wrong username or password");
+                        if (account.equals("Admin")) {
+                            new AdminHomePage("Admin").setVisible(true);
+                        } else if (account.equals("Teacher")) {
+                            new TeacherHomePage(username).setVisible(true);
+                        } else if (account.equals("Student")) {
+                            //new StudentHomePage(username).setVisible(true);
+                        }
+
+                        this.setVisible(false);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Wrong username or password");
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error occurred during login");
             }
-        } else if (ae.getSource() == bt2) {
-            this.setVisible(false);
+        } else if (actionevent.getSource() == button2) {
+            this.setVisible(false); // Back
         }
     }
 
