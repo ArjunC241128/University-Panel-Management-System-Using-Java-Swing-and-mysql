@@ -18,70 +18,59 @@ public class RegistrationForm extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
 
-       
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        panel.add(new JLabel("Name:"), gbc);
+        JLabel nameLabel = new JLabel("Name:");
+        nameLabel.setBounds(50, 30, 100, 25);
+        panel.add(nameLabel);
 
-        gbc.gridx = 1;
-        nameField = new JTextField(20);
-        panel.add(nameField, gbc);
+        nameField = new JTextField();
+        nameField.setBounds(160, 30, 180, 25);
+        panel.add(nameField);
 
-        
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        panel.add(new JLabel("Email:"), gbc);
+        JLabel emailLabel = new JLabel("Email:");
+        emailLabel.setBounds(50, 70, 100, 25);
+        panel.add(emailLabel);
 
-        gbc.gridx = 1;
-        emailField = new JTextField(20);
-        panel.add(emailField, gbc);
+        emailField = new JTextField();
+        emailField.setBounds(160, 70, 180, 25);
+        panel.add(emailField);
 
-     
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        panel.add(new JLabel("Password:"), gbc);
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setBounds(50, 110, 100, 25);
+        panel.add(passwordLabel);
 
-        gbc.gridx = 1;
-        passwordField = new JPasswordField(20);
-        panel.add(passwordField, gbc);
+        passwordField = new JPasswordField();
+        passwordField.setBounds(160, 110, 180, 25);
+        panel.add(passwordField);
 
-       
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        panel.add(new JLabel("Department:"), gbc);
+        JLabel deptLabel = new JLabel("Department:");
+        deptLabel.setBounds(50, 150, 100, 25);
+        panel.add(deptLabel);
 
-        gbc.gridx = 1;
         String[] departments = {"CSE", "EEE", "BBA", "Civil", "Textile"};
         departmentCombo = new JComboBox<>(departments);
-        panel.add(departmentCombo, gbc);
+        departmentCombo.setBounds(160, 150, 180, 25);
+        panel.add(departmentCombo);
 
-       
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        panel.add(new JLabel("User Type:"), gbc);
+        JLabel userTypeLabel = new JLabel("User Type:");
+        userTypeLabel.setBounds(50, 190, 100, 25);
+        panel.add(userTypeLabel);
 
-        gbc.gridx = 1;
         String[] users = {"Admin", "Student", "Teacher"};
         usertypeCombo = new JComboBox<>(users);
-        panel.add(usertypeCombo, gbc);
+        usertypeCombo.setBounds(160, 190, 180, 25);
+        panel.add(usertypeCombo);
 
-       
-        gbc.gridx = 0;
-        gbc.gridy = 5;
         JButton registerBtn = new JButton("Register");
-        panel.add(registerBtn, gbc);
+        registerBtn.setBounds(50, 240, 130, 30);
+        panel.add(registerBtn);
 
-       
-        gbc.gridx = 1;
         signInBtn = new JButton("Sign In");
-        panel.add(signInBtn, gbc);
+        signInBtn.setBounds(210, 240, 130, 30);
+        panel.add(signInBtn);
 
-      
         registerBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -89,12 +78,11 @@ public class RegistrationForm extends JFrame {
             }
         });
 
-       
         signInBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose(); // Close this form
-                new LoginPage(); // Open LoginPage
+                dispose();
+                new LoginPage();
             }
         });
 
@@ -115,7 +103,7 @@ public class RegistrationForm extends JFrame {
         }
 
         try {
-            ConnectionClass obj = new ConnectionClass(); // You must define this class
+            ConnectionClass obj = new ConnectionClass();
             String sql = "INSERT INTO user_register (username, email, password, department, usertype) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement stmt = obj.con.prepareStatement(sql);
             stmt.setString(1, name);
@@ -127,8 +115,8 @@ public class RegistrationForm extends JFrame {
 
             JOptionPane.showMessageDialog(this, "Registration successful!");
             clearFields();
-            dispose(); 
-            new LoginPage(); 
+            dispose();
+            new LoginPage();
 
         } catch (SQLIntegrityConstraintViolationException dup) {
             JOptionPane.showMessageDialog(this, "Email already registered.");
@@ -150,3 +138,4 @@ public class RegistrationForm extends JFrame {
         SwingUtilities.invokeLater(() -> new RegistrationForm());
     }
 }
+
